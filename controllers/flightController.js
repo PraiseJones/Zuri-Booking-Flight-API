@@ -40,36 +40,40 @@ exports.getSingleFlight = async (req, res) => {
             message: "Flight found",
             flight,
         });    
-    } catch (error) {}
+    } catch (error) {
+        res.status(500).json({ message: error })
+    }
 }
 
-// exports.updateFlight = (req, res) => {
-//     const {title, time, price, date}  = req.body
+exports.updateFlight = async (req, res) => {
+    try {
+        let id = req.params.id;
+        const flight = model.Flight.find((flight) => flight.id === id);
+        const { title, time, price, date } = await req.body;
+        flight.title = title;
+        flight.time = time;
+        flight.price = price;
+        flight.date = date;
+        model.Flight.save(flight);
+        res.status(200).json({
+            message: "Flight updated",
+            flight,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error })
+    }
+}
 
-//     for( let i = 0; i < model.length; i++){ 
-//             if (model[i].id == req.params.id) {
-//                 model[i].title= title
-//                 model[i].time = time
-//                 model[i].price = price
-//                 model[i].date = date
-//                 return res.status(202).send(model[i])
-//         }
-//     }
-
-//     return res.status(404).send({message: `No Flight with id ${req.params.id} found`})
-// }
-// exports.deleteFlight = (req, res) => {
-//     let found = false
-//     for( let i = 0; i < model.length; i++){ 
-//         if ( model[i].id == parseInt(req.params.id)) { 
-//             model.splice(i,1)
-//             found = true
-//             break
-//         }
-//     }
-
-//     if(found){
-//         return res.status(200).send({message: "Deleted"})
-//     }
-//     return res.status(404).send({message: `No Flight with id ${req.params.id} found`})
-// }
+exports.deleteFlight = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const flight = model.Flight.find((flight) => flight.id === id);
+        model.Flight.splice(model.Flight.indexOf(flight), 1);
+        res.status(200).json({
+            message: "Flight deleted",
+            flight,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
