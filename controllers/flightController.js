@@ -32,16 +32,16 @@ exports.getAllFlight = async (req, res) => {
     }
 }
 
-// exports.getSingleFlight = (req, res) => {
-
-//     const flight = model.find(m=>m.id==req.params.id)
-//     console.log(flight)
-//     if(flight){
-//         return res.status(200).send(flight)
-//     }
-
-//     return res.status(404).send({message: "No Flight found"})
-// }
+exports.getSingleFlight = async (req, res) => {
+    try {
+        let id = req.params.id;
+        const flight = model.Flight.find((flight) => flight.id === id);
+        res.status(200).json({
+            message: "Flight found",
+            flight,
+        });    
+    } catch (error) {}
+}
 
 // exports.updateFlight = (req, res) => {
 //     const {title, time, price, date}  = req.body

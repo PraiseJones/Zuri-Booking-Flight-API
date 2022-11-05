@@ -5,7 +5,7 @@ const controller = require('../controllers/flightController');
 
 router.get('/', controller.getAllFlight);
 router.post('/', controller.addFlight);
-// router.get('/:id', controller.getSingleFlight)
+router.get('/:id', controller.getSingleFlight)
 // router.patch('/:id', controller.updateFlight)
 // router.delete('/:id', controller.deleteFlight)
 

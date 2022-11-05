@@ -13,3 +13,6 @@ Content-Type: application/json
     "price": "26000",
     "date": "26-06-2022"
 }
+
+###
+GET http://localhost:5000/Flight HTTP/1.1
